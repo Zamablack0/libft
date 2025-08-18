@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hajai <hajai@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 08:10:34 by hajai             #+#    #+#             */
-/*   Updated: 2025/04/15 11:53:50 by hajai            ###   ########.fr       */
+/*   Created: 2025/04/01 09:35:52 by hajai             #+#    #+#             */
+/*   Updated: 2025/04/15 11:36:18 by hajai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+int	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	if (n == -2147483648)
+	size_t	l;
+
+	l = ft_strlen((char *) src);
+	if (size > 0)
 	{
-		ft_putchar_fd('-', fd);
-		ft_putchar_fd('2', fd);
-		ft_putnbr_fd(147483648, fd);
-		return ;
+		if (l + 1 < size)
+			ft_memcpy(dst, src, l + 1);
+		else
+		{
+			ft_memcpy(dst, src, size - 1);
+			dst[size - 1] = '\0';
+		}
 	}
-	if (n < 0)
-	{
-		ft_putchar_fd('-', fd);
-		n = -n;
-	}
-	if (n >= 10)
-		ft_putnbr_fd(n / 10, fd);
-	ft_putchar_fd('0' + n % 10, fd);
+	return (l);
 }

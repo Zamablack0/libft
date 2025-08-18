@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hajai <hajai@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/09 08:11:34 by hajai             #+#    #+#             */
+/*   Updated: 2025/04/15 12:44:18 by hajai            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 int	countword(char const *s, char c)
@@ -5,6 +17,8 @@ int	countword(char const *s, char c)
 	int	i;
 	int	count;
 
+	if (!s || s[0] == '\0')
+		return (0);
 	i = 0;
 	count = 0;
 	if (s[i] != c && s[i + 1] != '\0')
@@ -24,8 +38,8 @@ int	countword(char const *s, char c)
 char	*ft_strndup(const char *s, int start, int len)
 {
 	char	*new;
-	int	i;
-	
+	int		i;
+
 	new = malloc((len + 1) * sizeof(char));
 	i = 0;
 	while (i < len)
@@ -37,13 +51,15 @@ char	*ft_strndup(const char *s, int start, int len)
 	return (new);
 }
 
-char	**split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**tab;
-	int	i;
-	int	t;
-	int	start;
+	int		i;
+	int		t;
+	int		start;
 
+	if (!s)
+		return (NULL);
 	t = 0;
 	i = 0;
 	start = 0;

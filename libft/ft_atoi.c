@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hajai <hajai@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 08:10:34 by hajai             #+#    #+#             */
-/*   Updated: 2025/04/15 11:53:50 by hajai            ###   ########.fr       */
+/*   Created: 2025/04/01 14:25:04 by hajai             #+#    #+#             */
+/*   Updated: 2025/04/15 11:34:29 by hajai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+int	ft_atoi(const char *nptr)
 {
-	if (n == -2147483648)
+	int	i;
+	int	signe;
+	int	nb;
+
+	i = 0;
+	signe = 1;
+	nb = 0;
+	while ((nptr[i] == ' ') || (nptr[i] >= '\a' && nptr[i] <= '\r'))
+		i++;
+	if (nptr[i] == '+' || nptr[i] == '-')
 	{
-		ft_putchar_fd('-', fd);
-		ft_putchar_fd('2', fd);
-		ft_putnbr_fd(147483648, fd);
-		return ;
+		if (nptr[i] == '-')
+			signe = -signe;
+		i++;
 	}
-	if (n < 0)
+	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
-		ft_putchar_fd('-', fd);
-		n = -n;
+		nb = nb * 10;
+		nb += nptr[i] - '0';
+		i++;
 	}
-	if (n >= 10)
-		ft_putnbr_fd(n / 10, fd);
-	ft_putchar_fd('0' + n % 10, fd);
+	return (nb * signe);
 }

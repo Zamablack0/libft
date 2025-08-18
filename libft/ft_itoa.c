@@ -1,47 +1,71 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hajai <hajai@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/09 08:09:52 by hajai             #+#    #+#             */
+/*   Updated: 2025/04/15 11:34:49 by hajai            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-int	itoaconv(int n, char *tab, int i)
+int	lenn(long nbr)
 {
-	if (n < 0)
+	int	count;
+
+	count = 0;
+	if (nbr < 0)
 	{
-		tab[0] = '-';
-		n = -n;
+		count++;
+		nbr = -nbr;
 	}
-	if (n >= 10)
-		i = itoaconv(n / 10, tab, i - 1);
-	tab[i] = '0' + n % 10;
-	return (i + 1);
+	if (nbr == 0)
+		count++;
+	while (nbr != 0)
+	{
+		nbr /= 10;
+		count++;
+	}
+	return (count);
 }
 
-int	itoacount(int n, int i)
+char	*conv(int len)
 {
-	if (n < 0)
-		n = -n;
-	if (n >= 10)
-		return (itoacount(n / 10, i + 1));
-	return (i + 1);
+	char	*tmp;
+
+	tmp = malloc((len + 1) * sizeof(char));
+	if (!tmp)
+		return (NULL);
+	tmp[0] = '0';
+	return (tmp);
 }
 
 char	*ft_itoa(int n)
 {
-	char	*tab;
-	int	len;
-	int	totlen;
-	int	start;
+	int		len;
+	int		i;
+	char	*result;
+	long	nbr;
 
-	len = itoacount(n, 0);
-	if (n < 0)
-		totlen = len + 1;
-	else
-		totlen = len;
-	tab = malloc((totlen + 1) * sizeof(char));
-	if (!tab)
+	nbr = n;
+	len = lenn(nbr);
+	result = conv(len);
+	if (!result)
 		return (NULL);
+	if (nbr < 0)
+		nbr = -nbr;
+	i = len - 1;
+	while (nbr != 0)
+	{
+		result[i] = ((nbr % 10) + 48);
+		nbr = nbr / 10;
+		i--;
+	}
 	if (n < 0)
-		start = len;
-	else
-		start = len - 1;
-	itoaconv(n, tab, start);
-	tab[totlen] = '\0';
-	return (tab);
+		result[0] = '-';
+	result[len] = 0;
+	return (result);
 }
